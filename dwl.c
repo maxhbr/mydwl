@@ -132,7 +132,7 @@ typedef struct {
 typedef struct {
     struct wl_list link;
     struct wl_resource *resource;
-    Monitor *monitor;
+    Monitor *mon;
 } DwlIpcOutput;
 
 typedef struct {
@@ -1250,7 +1250,7 @@ void dwl_ipc_manager_get_output(struct wl_client *client, struct wl_resource *re
 
     ipc_output = ecalloc(1, sizeof(*ipc_output));
     ipc_output->resource = output_resource;
-    ipc_output->monitor = monitor;
+    ipc_output->mon = monitor;
     wl_resource_set_implementation(output_resource, &dwl_output_implementation, ipc_output, dwl_ipc_output_destroy);
     wl_list_insert(&monitor->dwl_ipc_outputs, &ipc_output->link);
     dwl_ipc_output_printstatus_to(ipc_output);
@@ -1273,7 +1273,7 @@ void dwl_ipc_output_printstatus(Monitor *monitor) {
 }
 
 void dwl_ipc_output_printstatus_to(DwlIpcOutput *ipc_output) {
-    Monitor *monitor = ipc_output->monitor;
+    Monitor *monitor = ipc_output->mon;
     Client *c, *focused;
     int tagmask, state, numclients, focused_client, tag;
     const char *title, *appid;
@@ -1326,7 +1326,7 @@ void dwl_ipc_output_set_client_tags(struct wl_client *client, struct wl_resource
     if (!ipc_output)
         return;
 
-    monitor = ipc_output->monitor;
+    monitor = ipc_output->mon;
     selected_client = focustop(monitor);
     if (!selected_client)
         return;
@@ -1349,7 +1349,7 @@ void dwl_ipc_output_set_layout(struct wl_client *client, struct wl_resource *res
     if (!ipc_output)
         return;
 
-    monitor = ipc_output->monitor;
+    monitor = ipc_output->mon;
     if (index >= LENGTH(layouts))
         return;
     if (index != monitor->lt[monitor->sellt] - layouts)
@@ -1368,7 +1368,7 @@ void dwl_ipc_output_set_tags(struct wl_client *client, struct wl_resource *resou
     ipc_output = wl_resource_get_user_data(resource);
     if (!ipc_output)
         return;
-    monitor = ipc_output->monitor;
+    monitor = ipc_output->mon;
 
     if (!newtags || newtags == monitor->tagset[monitor->seltags])
         return;
