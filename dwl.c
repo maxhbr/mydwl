@@ -710,8 +710,8 @@ cleanupmon(struct wl_listener *listener, void *data)
 	LayerSurface *l, *tmp;
 	int i;
 
-    DwlIpcOutput *ipc_output;
-    wl_list_for_each(ipc_output, &m->dwl_ipc_outputs, link)
+    DwlIpcOutput *ipc_output, *ipc_output_tmp;
+    wl_list_for_each_safe(ipc_output, ipc_output_tmp, &m->dwl_ipc_outputs, link)
         wl_resource_destroy(ipc_output->resource);
 	for (i = 0; i <= ZWLR_LAYER_SHELL_V1_LAYER_OVERLAY; i++)
 		wl_list_for_each_safe(l, tmp, &m->layers[i], link)
