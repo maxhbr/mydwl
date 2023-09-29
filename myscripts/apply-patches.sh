@@ -12,6 +12,8 @@ declare -a patches=(
 #   "faerryn:cursor_warp"
   "madcowog:ipc-v2"
   "PalanixYT:float_border_color"
+  "wochap:regexrules"
+  "youbitchoc:swallow"
 )
 
 addRemoteIfMissing() {
