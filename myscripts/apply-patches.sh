@@ -34,7 +34,7 @@ applyPatch() {
     else
         echo "apply $branch from $remote"
         git merge --no-edit "$remote/$branch"
-        nix build --no-out-link .#dwl
+        nix build .#dwl
     fi
 }
 
