@@ -9,7 +9,7 @@ declare -a patches=(
   "NikitaIvanovV:centeredmaster"
 #   "juliag2:alphafocus"
   "dm1tz:04-cyclelayouts"
-  "faerryn:cursor_warp"
+#   "faerryn:cursor_warp"
   "madcowog:ipc-v2"
   "PalanixYT:float_border_color"
 )
