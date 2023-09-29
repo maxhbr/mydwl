@@ -31,10 +31,10 @@ applyPatch() {
     # check if patch is already applied
     if git branch --contains "$remote/$branch" | grep -q '^\*'; then
         echo "patch $branch from $remote already applied"
-        return
+    else
+        echo "apply $branch from $remote"
+        git merge --no-edit "$remote/$branch"
     fi
-
-    echo "apply $branch from $remote"
 }
 
 cd "$(dirname "$0")/.."
@@ -43,13 +43,5 @@ cd "$(dirname "$0")/.."
 while IFS=':' read -r remote branch; do
   applyPatch "$remote" "$branch"
 done < <(printf '%s\n' "${patches[@]}")
-
-
-# for patch in "${patches[@]}"; do
-#   echo "Applying patch: $i"
-#   #split on :
-#     IFS=':' read -ra ADDR <<< "$patch"
-# #   curl -s $i | git apply
-# done
 
 
