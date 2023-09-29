@@ -52,7 +52,7 @@ exec ${mydwl}/bin/dwl -s ${mysomebar}/bin/somebar
       options.mydwl = with lib; {
         enable = mkEnableOption "mydwl";
         startCommand = mkOption {
-          type = type.str;
+          type = types.str;
           default = "${pkgs.mydwl-start}/bin/mydwl-start";
         };
         autostartCommands = mkOption {
