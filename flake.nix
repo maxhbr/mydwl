@@ -51,6 +51,10 @@ exec ${mydwl}/bin/dwl -s ${mysomebar}/bin/somebar
     in {
       options.mydwl = with lib; {
         enable = mkEnableOption "mydwl";
+        startCommand = mkOption {
+          type = type.str;
+          default = "${pkgs.mydwl-start}/bin/mydwl-start";
+        };
         autostartCommands = mkOption {
           type = types.lines;
           default = with pkgs; ''
@@ -71,12 +75,6 @@ exec ${mydwl}/bin/dwl -s ${mysomebar}/bin/somebar
             })
           ];
           home-manager.sharedModules = [{ home.packages = with pkgs; [ mydwl mysomebar mydwl-start ]; }];
-          # myconfig.desktop.wayland.greetdSettings = {
-          #   dwl_session = {
-          #     command = "${pkgs.mydwl-start}/bin/mydwl-start";
-          #     user = "mhuber";
-          #   };
-          # };
         });
     };
     nixosModules.default = self.nixosModules.mydwl;
