@@ -3,21 +3,53 @@
 set -euo pipefail
 
 declare -a patches=(
-  "https://github.com/djpohly/dwl/compare/main...sevz17:vanitygaps.patch"
-  "https://github.com/djpohly/dwl/compare/main...sevz17:autostart.patch"
-  "https://github.com/djpohly/dwl/compare/main...korei999:rotatetags.patch"
-  "https://github.com/djpohly/dwl/compare/main...NikitaIvanovV:centeredmaster.patch"
-  "https://github.com/djpohly/dwl/compare/main...juliag2:alphafocus.patch"
-  "https://github.com/djpohly/dwl/compare/main...dm1tz:04-cyclelayouts.patch"
-  "https://github.com/djpohly/dwl/compare/main...faerryn:cursor_warp.patch"
-  "https://github.com/djpohly/dwl/compare/main...madcowog:ipc-v2.patch"
-  "https://github.com/djpohly/dwl/compare/main...PalanixYT:float_border_color.patch"
+  "sevz17:vanitygaps"
+  "sevz17:autostart"
+  "korei999:rotatetags"
+  "NikitaIvanovV:centeredmaster"
+  "juliag2:alphafocus"
+  "dm1tz:04-cyclelayouts"
+  "faerryn:cursor_warp"
+  "madcowog:ipc-v2"
+  "PalanixYT:float_border_color"
 )
 
+addRemoteIfMissing() {
+    local remote="$1"
+    local url="https://github.com/$remote/dwl"
+    if ! git remote | grep -q "$remote"; then
+        git remote add "$remote" "$url"
+    fi
+}
+
+applyPatch() {
+    local remote="$1"
+    local branch="$2"
+    addRemoteIfMissing "$remote"
+    git fetch "$remote" "$branch"
+
+    # check if patch is already applied
+    if git branch --contains "$remote/$branch" | grep -q '^\*'; then
+        echo "patch $branch from $remote already applied"
+        return
+    fi
+
+    echo "apply $branch from $remote"
+}
+
 cd "$(dirname "$0")/.."
-for i in "${patches[@]}"; do
-  echo "Applying patch: $i"
-  curl -s $i | git apply
-done
+
+# read patches into pairs of remote and branch
+while IFS=':' read -r remote branch; do
+  applyPatch "$remote" "$branch"
+done < <(printf '%s\n' "${patches[@]}")
+
+
+# for patch in "${patches[@]}"; do
+#   echo "Applying patch: $i"
+#   #split on :
+#     IFS=':' read -ra ADDR <<< "$patch"
+# #   curl -s $i | git apply
+# done
 
 
