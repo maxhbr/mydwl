@@ -30,14 +30,14 @@ static const char *const autostart[] = {
 static const int tagcount = TAGCOUNT;
 
 static const Rule rules[] = {
-	/* app_id     title       tags mask     isfloating  isterm  noswallow  monitor */
-	// { "firefox",  NULL,       1 << 8,       0,          0,      1,         -1 },
-	{ "foot",     NULL,       0,            0,          1,      1,         -1 },
-	{ "^kitty$",  NULL,       0,            0,          1,      1,         -1 },
-	{ "Gimp",     NULL,       0,            1,          0,      0,         -1 },
-	{ NULL,       "New Layer", 0,           1,          0,      0,         -1 },
-	{ "zoom",     NULL,       0,            1,          0,      0,         -1 },
-	{ NULL,     "zoom",       0,            1,          0,      0,         -1 },
+	/* app_id     title       tags mask     isfloating   monitor */
+	// { "firefox",  NULL,       1 << 8,       0,          -1 },
+	{ "foot",     NULL,       0,            0,          -1 },
+	{ "^kitty$",  NULL,       0,            0,          -1 },
+	{ "Gimp",     NULL,       0,            1,          -1 },
+	{ NULL,       "New Layer", 0,           1,          -1 },
+	{ "zoom",     NULL,       0,            1,          -1 },
+	{ NULL,     "zoom",       0,            1,          -1 },
 };
 
 static const Layout tileLayout =  { "[]=", tile };
@@ -161,7 +161,8 @@ static const Key keys[] = {
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Tab,        focusstack,     {.i = +1} },
 	{ MODKEY,                    XKB_KEY_y,          view,           {0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_C,          killclient,     {0} },
-	{ MODKEY,                    XKB_KEY_g,          setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                    XKB_KEY_g,          cyclelayout,    {.i = +1 } },
+	// { MODKEY,                    XKB_KEY_g,          setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                    XKB_KEY_f,          setlayout,      {0} },
 	// { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_f,          setlayout,      {.v = &layouts[1]} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_F,         togglefullscreen, {0} },
