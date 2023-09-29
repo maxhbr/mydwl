@@ -12,12 +12,13 @@
     pkgs = import nixpkgs { system = "x86_64-linux"; };
   in {
     # TODO: is not a derivation or path
-    packages.x86_64-linux.mydwl = (pkgs.dwl.overrideAttrs (prev: {
+    packages.x86_64-linux.dwl = (pkgs.dwl.overrideAttrs (prev: {
           version = "git";
           src = ./.;
           enableXWayland = true;
           # conf = ./myconfig.h;
-      })).override { conf = ./myconfig.h; };
+    }));
+    packages.x86_64-linux.mydwl = self.packages.x86_64-linux.dwl.override { conf = ./myconfig.h; };
     packages.x86_64-linux.mysomebar =  (pkgs.somebar.overrideAttrs (prev: {
       version = "git";
       src = pkgs.fetchFromSourcehut {

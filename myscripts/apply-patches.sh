@@ -34,7 +34,7 @@ applyPatch() {
     else
         echo "apply $branch from $remote"
         git merge --no-edit "$remote/$branch"
-        nix build --no-out-link .
+        nix build --no-out-link .#dwl
     fi
 }
 
@@ -44,5 +44,3 @@ cd "$(dirname "$0")/.."
 while IFS=':' read -r remote branch; do
   applyPatch "$remote" "$branch"
 done < <(printf '%s\n' "${patches[@]}")
-
-
