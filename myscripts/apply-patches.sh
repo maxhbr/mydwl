@@ -18,7 +18,7 @@ declare -a patches=(
 
 addRemoteIfMissing() {
     local remote="$1"
-    local url="https://github.com/$remote/dwl"
+    local url="${2:-"https://github.com/$remote/dwl"}"
     if ! git remote | grep -q "$remote"; then
         git remote add "$remote" "$url"
     fi
@@ -42,7 +42,12 @@ applyPatch() {
 
 cd "$(dirname "$0")/.."
 
+addRemoteIfMissing "upsrteam" "https://github.com/djpohly/dwl"
+
 # read patches into pairs of remote and branch
 while IFS=':' read -r remote branch; do
   applyPatch "$remote" "$branch"
 done < <(printf '%s\n' "${patches[@]}")
+
+nix build .#dwl
+nix build .#mydwl
