@@ -7,7 +7,7 @@ declare -a patches=(
   "sevz17:autostart"
   "korei999:rotatetags"
   "NikitaIvanovV:centeredmaster"
-  "juliag2:alphafocus"
+#   "juliag2:alphafocus"
   "dm1tz:04-cyclelayouts"
   "faerryn:cursor_warp"
   "madcowog:ipc-v2"
@@ -34,6 +34,7 @@ applyPatch() {
     else
         echo "apply $branch from $remote"
         git merge --no-edit "$remote/$branch"
+        nix build --no-out-link .
     fi
 }
 
