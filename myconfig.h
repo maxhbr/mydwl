@@ -57,11 +57,11 @@ static const Layout layouts[] = {
 /* monitors */
 static const MonitorRule monrules[] = {
 	/* name       mfact nmaster scale layout       rotate/reflect                x    y */
-	{ "eDP-1",    0.5,  1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   0,  0 },
-	{ "DP-6",    0.5,  1,      1,    &layouts[2], WL_OUTPUT_TRANSFORM_NORMAL,   1,  0 },
-	{ "DP-1",    0.5,  1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   1,  -1 },
+	{ "eDP-1",    0.5,  1,      1,    &tileLayout, WL_OUTPUT_TRANSFORM_NORMAL,   0,  0 },
+	{ "DP-6",    0.5,  1,      1,    &centeredmasterLayout, WL_OUTPUT_TRANSFORM_NORMAL,   1,  0 },
+	{ "DP-1",    0.5,  1,      1,    &tileLayout, WL_OUTPUT_TRANSFORM_NORMAL,   1,  -1 },
 	/* defaults */
-	{ NULL,       0.55, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 },
+	{ NULL,       0.55, 1,      1,    &tileLayout, WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 },
 };
 
 /* keyboard */

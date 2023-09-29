@@ -1,0 +1,7 @@
+* my dwl configuration
+The repo is a fork of https://github.com/djpohly/dwl with
+- a bunch of patches applied (see [[./myscripts/apply-patches.sh]]),
+- my custom part of the config in [[./myconfig.c]] and
+- support for usage as a nix flake.
+
+see [[./README.md]] for the upstream original readme and licensing information.
