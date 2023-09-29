@@ -13,7 +13,6 @@ declare -a patches=(
   "madcowog:ipc-v2"
   "PalanixYT:float_border_color"
   "wochap:regexrules"
-  "youbitchoc:swallow"
 )
 
 addRemoteIfMissing() {
