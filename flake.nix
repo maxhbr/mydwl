@@ -3,8 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    # TODO: mysomebar as non-flake input
+    somebar.url = "sourcehut:~raphi/somebar";
+    somebar.flake = false;
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
@@ -12,48 +12,52 @@
     pkgs = import nixpkgs { system = "x86_64-linux"; };
   in {
     # TODO: is not a derivation or path
-    packages.x86_64-linux.dwl = (pkgs.dwl.overrideAttrs (prev: {
+    packages.x86_64-linux = {
+      dwl = (pkgs.dwl.overrideAttrs (prev: {
           version = "git";
           src = ./.;
           enableXWayland = true;
           # conf = ./myconfig.h;
-    }));
-    packages.x86_64-linux.mydwl = self.packages.x86_64-linux.dwl.override { conf = ./myconfig.h; };
-    packages.x86_64-linux.mysomebar =  (pkgs.somebar.overrideAttrs (prev: {
-      version = "git";
-      src = pkgs.fetchFromSourcehut {
-        owner = "~raphi";
-        repo = "somebar";
-        rev = "8c52d4704c0ac52c946e41a1a68c8292eb83d0d2";
-        hash = "sha256-9KYuX2bwRKiHiRHsFthdZ+TVkJE8Cjm+f78f9qhbB90=";
-      };
-      # patches = [
-      #   (pkgs.fetchpatch {
-      #         url = "https://git.sr.ht/~raphi/somebar/blob/master/contrib/clickable-tags-using-wtype.patch";
-      #         hash = "sha256-4M59rZukfyJAXG7ZwMjgzeu8wQKx6F0OBVbaNw0xZ7k=";
-      #       })
-      # ];
-  }));
-    packages.x86_64-linux.default = self.packages.x86_64-linux.mydwl;
-    nixosModules.mydwl = {config, pkgs, lib, ...}: let
+      }));
+      mydwl = self.packages.x86_64-linux.dwl.override { conf = ./myconfig.h; };
+      mysomebar =  (pkgs.somebar.overrideAttrs (prev: {
+        version = "git";
+        src = inputs.somebar;
+        # patches = [
+        #   (pkgs.fetchpatch {
+        #         url = "https://git.sr.ht/~raphi/somebar/blob/master/contrib/clickable-tags-using-wtype.patch";
+        #         hash = "sha256-4M59rZukfyJAXG7ZwMjgzeu8wQKx6F0OBVbaNw0xZ7k=";
+        #       })
+        # ];
+      }));
+      dwl-waybar = pkgs.callPackage ./dwl-waybar { };
+      default = self.packages.x86_64-linux.mydwl;
+    };
+    nixosModules.mydwl = {config, pkgs, lib, ...}: with self.packages.x86_64-linux; let
       cfg = config.mydwl;
-      mydwl = self.packages.x86_64-linux.mydwl;
-      mysomebar = self.packages.x86_64-linux.mysomebar;
       mydwl-autostart = pkgs.writeShellScriptBin "mydwl-autostart" ''
 set -x
 ${cfg.autostartCommands}
 ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all
 '';
-      mydwl-start = pkgs.writeShellScriptBin "mydwl-start" ''
+      mydwl-start = let
+        dashS = (if cfg.barCommand == null then "" else "-s ${cfg.barCommand}");
+      in pkgs.writeShellScriptBin "mydwl-start" ''
 PATH="$PATH:${mydwl-autostart}/bin"
-exec ${mydwl}/bin/dwl -s ${mysomebar}/bin/somebar
+exec &> >(tee -a "/tmp/dwl.''${XDG_VTNR}.''${USER}.log")
+set -x
+exec ${mydwl}/bin/dwl ${dashS} | tee "/tmp/dwl.''${XDG_VTNR}.''${USER}.stdout"
 '';
     in {
       options.mydwl = with lib; {
         enable = mkEnableOption "mydwl";
         startCommand = mkOption {
-          type = types.str;
+          type = types.path;
           default = "${pkgs.mydwl-start}/bin/mydwl-start";
+        };
+        barCommand = mkOption {
+          type = types.nullOr types.path;
+          default = "${pkgs.mysomebar}/bin/somebar";
         };
         autostartCommands = mkOption {
           type = types.lines;
@@ -71,10 +75,10 @@ exec ${mydwl}/bin/dwl -s ${mysomebar}/bin/somebar
         (lib.mkIf cfg.enable {
           nixpkgs.overlays = [
             (_: _: {
-              inherit mydwl mysomebar mydwl-autostart mydwl-start;
+              inherit mydwl mysomebar mydwl-autostart mydwl-start dwl-waybar;
             })
           ];
-          home-manager.sharedModules = [{ home.packages = with pkgs; [ mydwl mysomebar mydwl-start ]; }];
+          home-manager.sharedModules = [{ home.packages = with pkgs; [ mydwl mysomebar mydwl-start dwl-waybar ]; }];
         });
     };
     nixosModules.default = self.nixosModules.mydwl;

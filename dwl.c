@@ -303,6 +303,7 @@ static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *m);
 static void togglefloating(const Arg *arg);
+static void setnofloating(const Arg *arg);
 static void togglefullscreen(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
@@ -2396,6 +2397,15 @@ togglefloating(const Arg *arg)
 	/* return if fullscreen */
 	if (sel && !sel->isfullscreen)
 		setfloating(sel, !sel->isfloating);
+}
+
+void
+setnofloating(const Arg *arg)
+{
+	Client *sel = focustop(selmon);
+	/* return if fullscreen */
+	if (sel && !sel->isfullscreen)
+		setfloating(sel, 0);
 }
 
 void

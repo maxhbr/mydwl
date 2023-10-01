@@ -9,7 +9,7 @@ static const unsigned int gappiv           = 10; /* vert inner gap between windo
 static const unsigned int gappoh           = 10; /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov           = 10; /* vert outer gap between windows and screen edge */
 static const float bordercolor[]           = {0.5, 0.5, 0.5, 1.0};
-static const float floatcolor[]        = {1.0, 0.0, 0.0, 0.0};
+static const float floatcolor[]            = {1.0, 0.0, 0.0, 0.0};
 static const float focuscolor[]            = {0.933, 0.604, 0.0, 1.0};
 /* To conform the xdg-protocol, set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.1, 0.1, 0.1, 1.0};
@@ -162,15 +162,9 @@ static const Key keys[] = {
 	{ MODKEY,                    XKB_KEY_y,          view,           {0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_C,          killclient,     {0} },
 	{ MODKEY,                    XKB_KEY_g,          cyclelayout,    {.i = +1 } },
-	// { MODKEY,                    XKB_KEY_g,          setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                    XKB_KEY_f,          setlayout,      {0} },
-	// { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_f,          setlayout,      {.v = &layouts[1]} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_F,         togglefullscreen, {0} },
-	{ MODKEY,                    XKB_KEY_m,          setlayout,      {.v = &layouts[2]} },
-	// { MODKEY,                    XKB_KEY_space,      setlayout,      {0} },
-	// { MODKEY|WLR_MODIFIER_CTRL,  XKB_KEY_comma,      cyclelayout,    {.i = -1 } },
-	// { MODKEY|WLR_MODIFIER_CTRL,  XKB_KEY_period,     cyclelayout,    {.i = +1 } },
-	{ MODKEY,                    XKB_KEY_space,      togglefloating, {0} },
+	{ MODKEY,                    XKB_KEY_space,      cyclelayout,    {.i = +1 } },
+	{ MODKEY,                    XKB_KEY_f,          togglefullscreen, {0} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_space,      setlayout,      {0} },
 	{ MODKEY,                    XKB_KEY_d,          view,           {.ui = ~0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_D,          tag,            {.ui = ~0} },
 	{ MODKEY,                    XKB_KEY_comma,      focusmon,       {.i = WLR_DIRECTION_LEFT} },
@@ -197,6 +191,6 @@ static const Key keys[] = {
 
 static const Button buttons[] = {
 	{ MODKEY, BTN_LEFT,   moveresize,     {.ui = CurMove} },
-	{ MODKEY, BTN_MIDDLE, togglefloating, {0} },
+	{ MODKEY, BTN_MIDDLE, setnofloating,   {0} },
 	{ MODKEY, BTN_RIGHT,  moveresize,     {.ui = CurResize} },
 };
