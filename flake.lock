@@ -18,7 +18,24 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "somebar": "somebar"
+      }
+    },
+    "somebar": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1691000288,
+        "narHash": "sha256-9KYuX2bwRKiHiRHsFthdZ+TVkJE8Cjm+f78f9qhbB90=",
+        "owner": "~raphi",
+        "repo": "somebar",
+        "rev": "8c52d4704c0ac52c946e41a1a68c8292eb83d0d2",
+        "type": "sourcehut"
+      },
+      "original": {
+        "owner": "~raphi",
+        "repo": "somebar",
+        "type": "sourcehut"
       }
     }
   },
