@@ -64,7 +64,7 @@ ${mydwl}/bin/dwl ${directStdout}
           type = types.nullOr types.path;
           default = "${pkgs.mysomebar}/bin/mysomebar";
         };
-        addWaybarModules = mkEnableOption "add waybar modules";
+        addWaybarModulesForDwlWaybar = mkEnableOption "add waybar modules, to use dwl-waybar";
         autostartCommands = mkOption {
           type = types.lines;
           default = with pkgs; ''
@@ -86,7 +86,7 @@ ${mydwl}/bin/dwl ${directStdout}
           ];
           home-manager.sharedModules = [{
             home.packages = with pkgs; [ mydwl mysomebar mydwl-start dwl-waybar someblocks ];
-            programs.waybar.settings =lib.mkIf cfg.addWaybarModules {
+            programs.waybar.settings =lib.mkIf cfg.addWaybarModulesForDwlWaybar {
               mainBar = lib.mkMerge ([{
                 modules-left = (builtins.map (i: "custom/dwl_tag#${toString i}")
                   (builtins.genList (i: i) 9));
