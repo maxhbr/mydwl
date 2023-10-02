@@ -37,6 +37,8 @@ makeWrapper $out/bin/somebar $out/bin/mysomebar \
     nixosModules.mydwl = {config, pkgs, lib, ...}: with self.packages.x86_64-linux; let
       cfg = config.mydwl;
       mydwl-autostart = pkgs.writeShellScriptBin "mydwl-autostart" ''
+# swallow stdin
+exec <&-
 set -x
 ${cfg.autostartCommands}
 ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all
