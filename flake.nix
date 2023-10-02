@@ -24,13 +24,11 @@
         version = "git";
         src = inputs.somebar;
         # patches = [
-        #   (pkgs.fetchpatch {
-        #         url = "https://git.sr.ht/~raphi/somebar/blob/master/contrib/clickable-tags-using-wtype.patch";
-        #         hash = "sha256-4M59rZukfyJAXG7ZwMjgzeu8wQKx6F0OBVbaNw0xZ7k=";
-        #       })
+        #   "${inputs.somebar}/contrib/clickable-tags-using-wtype.patch"
         # ];
       }));
       dwl-waybar = pkgs.callPackage ./dwl-waybar { };
+      dwl-state = pkgs.callPackage ./dwl-state { };
       default = self.packages.x86_64-linux.mydwl;
     };
     nixosModules.mydwl = {config, pkgs, lib, ...}: with self.packages.x86_64-linux; let
@@ -41,12 +39,16 @@ ${cfg.autostartCommands}
 ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all
 '';
       mydwl-start = let
-        dashS = (if cfg.barCommand == null then "" else "-s ${cfg.barCommand}");
+        wrappedBarCommand = pkgs.writeShellScriptBin "mydwl-wrappedBarCommand" ''
+set -x
+tee "/tmp/dwl.''${XDG_VTNR}.''${USER}.stdout" | ${cfg.barCommand}
+'';
+        directStdout = (if cfg.barCommand == null then "| tee /tmp/dwl.\${XDG_VTNR}.\${USER}.stdout" else "-s ${wrappedBarCommand}/bin/mydwl-wrappedBarCommand");
       in pkgs.writeShellScriptBin "mydwl-start" ''
 PATH="$PATH:${mydwl-autostart}/bin"
 exec &> >(tee -a "/tmp/dwl.''${XDG_VTNR}.''${USER}.log")
 set -x
-exec ${mydwl}/bin/dwl ${dashS} | tee "/tmp/dwl.''${XDG_VTNR}.''${USER}.stdout"
+${mydwl}/bin/dwl ${directStdout}
 '';
     in {
       options.mydwl = with lib; {
@@ -75,10 +77,42 @@ exec ${mydwl}/bin/dwl ${dashS} | tee "/tmp/dwl.''${XDG_VTNR}.''${USER}.stdout"
         (lib.mkIf cfg.enable {
           nixpkgs.overlays = [
             (_: _: {
-              inherit mydwl mysomebar mydwl-autostart mydwl-start dwl-waybar;
+              inherit mydwl mysomebar mydwl-autostart mydwl-start dwl-waybar dwl-state;
             })
           ];
-          home-manager.sharedModules = [{ home.packages = with pkgs; [ mydwl mysomebar mydwl-start dwl-waybar ]; }];
+          home-manager.sharedModules = [{
+            home.packages = with pkgs; [ mydwl mysomebar mydwl-start dwl-waybar dwl-state ];
+            programs.waybar.settings.mainBar = lib.mkMerge ([{
+              modules-left = (builtins.map (i: "custom/dwl_tag#${toString i}")
+                (builtins.genList (i: i) 9));
+              modules-center = [ "custom/dwl_title" ];
+              "custom/dwl_layout" = {
+                exec = "${dwl-waybar}/bin/dwl-waybar '' layout";
+                format = "{}";
+                escape = true;
+                return-type = "json";
+              };
+              "custom/dwl_title" = {
+                exec = "${dwl-waybar}/bin/dwl-waybar '' title";
+                format = "{}";
+                escape = true;
+                return-type = "json";
+                max-length = 50;
+              };
+              "custom/dwl_mode" = {
+                exec = "${dwl-waybar}/bin/dwl-waybar '' mode";
+                format = "{}";
+                escape = true;
+                return-type = "json";
+              };
+            }] ++ (builtins.map (i: {
+              "custom/dwl_tag#${toString i}" = {
+                exec = "${dwl-waybar}/bin/dwl-waybar '' ${toString i}";
+                format = "{}";
+                return-type = "json";
+              };
+            }) (builtins.genList (i: i) 9)));
+          }];
         });
     };
     nixosModules.default = self.nixosModules.mydwl;

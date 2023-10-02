@@ -76,7 +76,7 @@
 # Variables
 declare output title mode layout occupiedtags focusedtags urgenttags
 declare -a name
-readonly fname="/tmp/dwl.${XDG_VTNR}.${USER}.waybar.log"
+readonly fname="/tmp/dwl.${XDG_VTNR}.${USER}.stdout"
 # TODO: what if there are multiple DWL instance which share the the file name, will is cause problem? and this file will increese constantly, how to trim it?
 
 name=("U" "I" "A" "E" "O" "S" "N" "R" "T") # Array of labels for tags
