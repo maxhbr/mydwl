@@ -7,12 +7,10 @@ declare -a patches=(
   "sevz17:autostart"
   "korei999:rotatetags"
   "NikitaIvanovV:centeredmaster"
-#   "juliag2:alphafocus"
   "dm1tz:04-cyclelayouts"
-#   "faerryn:cursor_warp"
-  "madcowog:ipc-v2"
   "PalanixYT:float_border_color"
   "wochap:regexrules"
+  "madcowog:ipc-v2"
 )
 
 addRemoteIfMissing() {
@@ -39,9 +37,9 @@ applyPatch() {
     fi
 }
 
-cd "$(dirname "$0")/.."
-
-addRemoteIfMissing "upsrteam" "https://github.com/djpohly/dwl"
+cd "$(dirname "$0")"
+addRemoteIfMissing "upstream" "https://github.com/djpohly/dwl"
+applyPatch "upstream" "main"
 
 # read patches into pairs of remote and branch
 while IFS=':' read -r remote branch; do
