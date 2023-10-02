@@ -33,7 +33,6 @@ static const Rule rules[] = {
 	/* app_id     title       tags mask     isfloating   monitor */
 	// { "firefox",  NULL,       1 << 8,       0,          -1 },
 	{ "foot",     NULL,       0,            0,          -1 },
-	{ "^kitty$",  NULL,       0,            0,          -1 },
 	{ "Gimp",     NULL,       0,            1,          -1 },
 	{ NULL,       "New Layer", 0,           1,          -1 },
 	{ "zoom",     NULL,       0,            1,          -1 },
