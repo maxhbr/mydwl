@@ -32,28 +32,24 @@ makeWrapper $out/bin/somebar $out/bin/mysomebar \
       dwl-waybar = pkgs.callPackage ./dwl-waybar { };
       dwl-state = pkgs.callPackage ./dwl-state { };
       someblocks = pkgs.callPackage ./someblocks { };
-      default = self.packages.x86_64-linux.mydwl;
     };
     nixosModules.mydwl = {config, pkgs, lib, ...}: with self.packages.x86_64-linux; let
       cfg = config.mydwl;
-      mydwl-autostart = pkgs.writeShellScriptBin "mydwl-autostart" ''
+      mydwl-start = let
+        mydwl-autostart = pkgs.writeShellScriptBin "mydwl-autostart" ''
 # swallow stdin
 exec <&-
 set -x
 ${cfg.autostartCommands}
-${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all
 '';
-      mydwl-start = let
-        wrappedBarCommand = pkgs.writeShellScriptBin "mydwl-wrappedBarCommand" ''
+        mydwl-autostart-pipe = pkgs.writeShellScriptBin "mydwl-autostart-pipe" ''
 set -x
-tee "/tmp/dwl.''${XDG_VTNR}.''${USER}.stdout" | ${cfg.barCommand}
+tee "/tmp/dwl.''${XDG_VTNR}.''${USER}.stdout" | ${mydwl-autostart}/bin/mydwl-autostart
 '';
-        directStdout = (if cfg.barCommand == null then "| tee /tmp/dwl.\${XDG_VTNR}.\${USER}.stdout" else "-s ${wrappedBarCommand}/bin/mydwl-wrappedBarCommand");
       in pkgs.writeShellScriptBin "mydwl-start" ''
-PATH="$PATH:${mydwl-autostart}/bin"
 exec &> >(tee -a "/tmp/dwl.''${XDG_VTNR}.''${USER}.log")
 set -x
-${mydwl}/bin/dwl ${directStdout}
+  exec ${mydwl}/bin/dwl -s ${mydwl-autostart-pipe}/bin/mydwl-autostart-pipe
 '';
     in {
       options.mydwl = with lib; {
@@ -83,46 +79,53 @@ ${mydwl}/bin/dwl ${directStdout}
         (lib.mkIf cfg.enable {
           nixpkgs.overlays = [
             (_: _: {
-              inherit mydwl mysomebar mydwl-autostart mydwl-start dwl-waybar dwl-state someblocks;
+              inherit mydwl mysomebar mydwl-start dwl-waybar dwl-state someblocks;
             })
           ];
           home-manager.sharedModules = [{
             home.packages = with pkgs; [ mydwl mysomebar mydwl-start dwl-waybar someblocks ];
-            programs.waybar.settings =lib.mkIf cfg.addWaybarModulesForDwlWaybar {
-              mainBar = lib.mkMerge ([{
-                modules-left = (builtins.map (i: "custom/dwl_tag#${toString i}")
-                  (builtins.genList (i: i) 9));
-                modules-center = [ "custom/dwl_title" ];
-                "custom/dwl_layout" = {
-                  exec = "${dwl-waybar}/bin/dwl-waybar '' layout";
-                  format = "{}";
-                  escape = true;
-                  return-type = "json";
-                };
-                "custom/dwl_title" = {
-                  exec = "${dwl-waybar}/bin/dwl-waybar '' title";
-                  format = "{}";
-                  escape = true;
-                  return-type = "json";
-                  max-length = 50;
-                };
-                "custom/dwl_mode" = {
-                  exec = "${dwl-waybar}/bin/dwl-waybar '' mode";
-                  format = "{}";
-                  escape = true;
-                  return-type = "json";
-                };
-              }] ++ (builtins.map (i: {
-                "custom/dwl_tag#${toString i}" = {
-                  exec = "${dwl-waybar}/bin/dwl-waybar '' ${toString i}";
-                  format = "{}";
-                  return-type = "json";
-                };
-              }) (builtins.genList (i: i) 9)));
+            programs.waybar.settings.mainBar = {
+              modules-left = lib.mkForce [ ]; # "dwl/tags" ];
+              modules-center = lib.mkForce [ ];
+              "dwl/tags" = {
+                num-tags = 9;
+                tag-labels = [ "U" "I" "A" "E" "O" "S" "N" "R" "T" ];
+              };
             };
+            # programs.waybar.settings = lib.mkIf cfg.addWaybarModulesForDwlWaybar {
+            #   mainBar = lib.mkMerge ([{
+            #     modules-left = (builtins.map (i: "custom/dwl_tag#${toString i}")
+            #       (builtins.genList (i: i) 9));
+            #     modules-center = [ "custom/dwl_title" ];
+            #     "custom/dwl_layout" = {
+            #       exec = "${dwl-waybar}/bin/dwl-waybar '' layout";
+            #       format = "{}";
+            #       escape = true;
+            #       return-type = "json";
+            #     };
+            #     "custom/dwl_title" = {
+            #       exec = "${dwl-waybar}/bin/dwl-waybar '' title";
+            #       format = "{}";
+            #       escape = true;
+            #       return-type = "json";
+            #       max-length = 50;
+            #     };
+            #     "custom/dwl_mode" = {
+            #       exec = "${dwl-waybar}/bin/dwl-waybar '' mode";
+            #       format = "{}";
+            #       escape = true;
+            #       return-type = "json";
+            #     };
+            #   }] ++ (builtins.map (i: {
+            #     "custom/dwl_tag#${toString i}" = {
+            #       exec = "${dwl-waybar}/bin/dwl-waybar '' ${toString i}";
+            #       format = "{}";
+            #       return-type = "json";
+            #     };
+            #   }) (builtins.genList (i: i) 9)));
+            # };
           }];
         });
     };
-    nixosModules.default = self.nixosModules.mydwl;
   };
 }
