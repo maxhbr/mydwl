@@ -29,6 +29,7 @@ static const char *const autostart[] = {
 #define TAGCOUNT (9)
 static const int tagcount = TAGCOUNT;
 
+/* use lswt to identify names */
 static const Rule rules[] = {
 	/* app_id     title       tags mask     isfloating   monitor */
 	// { "firefox",  NULL,       1 << 8,       0,          -1 },
@@ -37,6 +38,9 @@ static const Rule rules[] = {
 	{ NULL,       "New Layer", 0,           1,          -1 },
 	{ "zoom",     NULL,       0,            1,          -1 },
 	{ NULL,     "zoom",       0,            1,          -1 },
+	{ "wdisplays", NULL       0,            1,          -1 },
+	{ "foot-bluetuith", NULL  0,            1,          -1 },
+	{ "pavucontrol", NULL     0,            1,          -1 },
 };
 
 static const Layout tileLayout =  { "[]=", tile };
