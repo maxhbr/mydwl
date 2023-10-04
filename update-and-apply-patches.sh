@@ -11,7 +11,6 @@ declare -a patches=(
 #   "PalanixYT:float_border_color"
 #   "wochap:regexrules"
   "madcowog:ipc-v2"
-  "mortezadadgar:pertag"
 )
 
 addRemoteIfMissing() {

@@ -38,9 +38,9 @@ static const Rule rules[] = {
 	{ NULL,       "New Layer", 0,           1,          -1 },
 	{ "zoom",     NULL,       0,            1,          -1 },
 	{ NULL,     "zoom",       0,            1,          -1 },
-	{ "wdisplays", NULL       0,            1,          -1 },
-	{ "foot-bluetuith", NULL  0,            1,          -1 },
-	{ "pavucontrol", NULL     0,            1,          -1 },
+	{ "wdisplays", NULL,      0,            1,          -1 },
+	{ "foot-bluetuith", NULL, 0,            1,          -1 },
+	{ "pavucontrol", NULL,    0,            1,          -1 }
 };
 
 static const Layout tileLayout =  { "[]=", tile };
