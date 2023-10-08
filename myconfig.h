@@ -1,3 +1,8 @@
+/* Taken from https://github.com/djpohly/dwl/issues/466 */
+#define COLOR(hex)    { ((hex >> 24) & 0xFF) / 255.0f, \
+                        ((hex >> 16) & 0xFF) / 255.0f, \
+                        ((hex >> 8) & 0xFF) / 255.0f, \
+                        (hex & 0xFF) / 255.0f }
 /* appearance */
 static const int sloppyfocus               = 1;  /* focus follows mouse */
 static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will disable idle tracking even if it's surface isn't visible  */
@@ -8,9 +13,9 @@ static const unsigned int gappih           = 10; /* horiz inner gap between wind
 static const unsigned int gappiv           = 10; /* vert inner gap between windows */
 static const unsigned int gappoh           = 10; /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov           = 10; /* vert outer gap between windows and screen edge */
-static const float bordercolor[]           = {0.5, 0.5, 0.5, 1.0};
-static const float floatcolor[]            = {1.0, 0.0, 0.0, 0.0};
-static const float focuscolor[]            = {0.933, 0.604, 0.0, 1.0};
+static const float bordercolor[]           = COLOR(0xe0cbc766);
+static const float focuscolor[]            = COLOR(0xee9a00ff);
+static const float floatcolor[]            = COLOR(0xff000099);
 /* To conform the xdg-protocol, set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.1, 0.1, 0.1, 1.0};
 static const float unfocussedalpha  = 0.75;

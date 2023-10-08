@@ -8,9 +8,9 @@ declare -a patches=(
   "NikitaIvanovV:centeredmaster"
   "korei999:rotatetags"
   "dm1tz:04-cyclelayouts"
-#   "PalanixYT:float_border_color"
 #   "wochap:regexrules"
   "madcowog:ipc-v2"
+  "PalanixYT:float_border_color"
 )
 
 addRemoteIfMissing() {
