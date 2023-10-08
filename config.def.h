@@ -14,6 +14,7 @@ static const unsigned int gappiv           = 10; /* vert inner gap between windo
 static const unsigned int gappoh           = 10; /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov           = 10; /* vert outer gap between windows and screen edge */
 static const float bordercolor[]           = COLOR(0x808080ff);
+static const float floatcolor[]		= {1.0, 0.0, 0.0, 0.0};
 static const float focuscolor[]            = COLOR(0xff0000ff);
 /* To conform the xdg-protocol, set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.1, 0.1, 0.1, 1.0}; /* You can also use glsl colors */
