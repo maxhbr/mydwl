@@ -32,6 +32,7 @@ makeWrapper $out/bin/somebar $out/bin/mysomebar \
       dwl-waybar = pkgs.callPackage ./dwl-waybar { };
       dwl-state = pkgs.callPackage ./dwl-state { };
       someblocks = pkgs.callPackage ./someblocks { };
+      sway-audio-idle-inhibit = pkgs.callPackage ./SwayAudioIdleInhibit { };
     };
     nixosModules.mydwl = {config, pkgs, lib, ...}: with self.packages.x86_64-linux; let
       cfg = config.mydwl;
@@ -79,17 +80,28 @@ set -x
         (lib.mkIf cfg.enable {
           nixpkgs.overlays = [
             (_: _: {
-              inherit mydwl mysomebar mydwl-start dwl-waybar dwl-state someblocks;
+              inherit mydwl mysomebar mydwl-start dwl-waybar dwl-state someblocks sway-audio-idle-inhibit;
             })
           ];
           home-manager.sharedModules = [{
-            home.packages = with pkgs; [ mydwl mysomebar mydwl-start dwl-waybar someblocks ];
+            home.packages = with pkgs; [ mydwl mysomebar mydwl-start dwl-waybar someblocks sway-audio-idle-inhibit ];
             programs.waybar.settings.mainBar = {
               modules-left = lib.mkForce [ ]; # "dwl/tags" ];
               modules-center = lib.mkForce [ ];
               "dwl/tags" = {
                 num-tags = 9;
                 tag-labels = [ "U" "I" "A" "E" "O" "S" "N" "R" "T" ];
+              };
+              "custom/audio_idle_inhibitor" = {
+                format = "{icon}";
+                exec = "${sway-audio-idle-inhibit}/bin/sway-audio-idle-inhibit --dry-print-both-waybar";
+                return-type = "json";
+                format-icons = {
+                  output = "";
+                  input = "";
+                  output-input = "  ";
+                  none = "";
+                };
               };
             };
             # programs.waybar.settings = lib.mkIf cfg.addWaybarModulesForDwlWaybar {
