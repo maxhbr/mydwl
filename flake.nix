@@ -5,6 +5,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     somebar.url = "sourcehut:~raphi/somebar";
     somebar.flake = false;
+    sway-audio-idle-inhibit.url = "github:ErikReider/SwayAudioIdleInhibit";
+    sway-audio-idle-inhibit.flake = false;
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
@@ -32,7 +34,7 @@ makeWrapper $out/bin/somebar $out/bin/mysomebar \
       dwl-waybar = pkgs.callPackage ./dwl-waybar { };
       dwl-state = pkgs.callPackage ./dwl-state { };
       someblocks = pkgs.callPackage ./someblocks { };
-      sway-audio-idle-inhibit = pkgs.callPackage ./SwayAudioIdleInhibit { };
+      sway-audio-idle-inhibit = pkgs.callPackage ./SwayAudioIdleInhibit { src = inputs.sway-audio-idle-inhibit; };
     };
     nixosModules.mydwl = {config, pkgs, lib, ...}: with self.packages.x86_64-linux; let
       cfg = config.mydwl;
