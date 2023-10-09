@@ -19,7 +19,8 @@
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
-        "somebar": "somebar"
+        "somebar": "somebar",
+        "sway-audio-idle-inhibit": "sway-audio-idle-inhibit"
       }
     },
     "somebar": {
@@ -36,6 +37,22 @@
         "owner": "~raphi",
         "repo": "somebar",
         "type": "sourcehut"
+      }
+    },
+    "sway-audio-idle-inhibit": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1691602798,
+        "narHash": "sha256-MKzyF5xY0uJ/UWewr8VFrK0y7ekvcWpMv/u9CHG14gs=",
+        "owner": "ErikReider",
+        "repo": "SwayAudioIdleInhibit",
+        "rev": "c850bc4812216d03e05083c69aa05326a7fab9c7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ErikReider",
+        "repo": "SwayAudioIdleInhibit",
+        "type": "github"
       }
     }
   },

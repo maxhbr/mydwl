@@ -15,7 +15,6 @@
   let
     pkgs = import nixpkgs { system = "x86_64-linux"; };
   in {
-    # TODO: is not a derivation or path
     packages.x86_64-linux = {
       dwl = (pkgs.dwl.overrideAttrs (prev: {
           version = "git";
@@ -33,9 +32,6 @@ makeWrapper $out/bin/somebar $out/bin/mysomebar \
   --add-flags '-s "/tmp/somebar.''${XDG_VTNR}.''${USER}.fifo"'
         '';
       }));
-      dwl-waybar = pkgs.callPackage ./dwl-waybar { };
-      dwl-state = pkgs.callPackage ./dwl-state { };
-      someblocks = pkgs.callPackage ./someblocks { };
       sway-audio-idle-inhibit = pkgs.callPackage ./SwayAudioIdleInhibit { src = inputs.sway-audio-idle-inhibit; };
     };
     nixosModules.mydwl = {config, pkgs, lib, ...}: with self.packages.x86_64-linux; let
@@ -84,7 +80,7 @@ set -x
         (lib.mkIf cfg.enable {
           nixpkgs.overlays = [
             (_: _: {
-              inherit mydwl mysomebar mydwl-start dwl-waybar dwl-state someblocks sway-audio-idle-inhibit;
+              inherit mydwl mysomebar mydwl-start sway-audio-idle-inhibit;
             })
           ];
           home-manager.sharedModules = [{
@@ -108,38 +104,6 @@ set -x
                 };
               };
             };
-            # programs.waybar.settings = lib.mkIf cfg.addWaybarModulesForDwlWaybar {
-            #   mainBar = lib.mkMerge ([{
-            #     modules-left = (builtins.map (i: "custom/dwl_tag#${toString i}")
-            #       (builtins.genList (i: i) 9));
-            #     modules-center = [ "custom/dwl_title" ];
-            #     "custom/dwl_layout" = {
-            #       exec = "${dwl-waybar}/bin/dwl-waybar '' layout";
-            #       format = "{}";
-            #       escape = true;
-            #       return-type = "json";
-            #     };
-            #     "custom/dwl_title" = {
-            #       exec = "${dwl-waybar}/bin/dwl-waybar '' title";
-            #       format = "{}";
-            #       escape = true;
-            #       return-type = "json";
-            #       max-length = 50;
-            #     };
-            #     "custom/dwl_mode" = {
-            #       exec = "${dwl-waybar}/bin/dwl-waybar '' mode";
-            #       format = "{}";
-            #       escape = true;
-            #       return-type = "json";
-            #     };
-            #   }] ++ (builtins.map (i: {
-            #     "custom/dwl_tag#${toString i}" = {
-            #       exec = "${dwl-waybar}/bin/dwl-waybar '' ${toString i}";
-            #       format = "{}";
-            #       return-type = "json";
-            #     };
-            #   }) (builtins.genList (i: i) 9)));
-            # };
           }];
         });
     };
