@@ -3,8 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
     somebar.url = "sourcehut:~raphi/somebar";
     somebar.flake = false;
+
     sway-audio-idle-inhibit.url = "github:ErikReider/SwayAudioIdleInhibit";
     sway-audio-idle-inhibit.flake = false;
   };
@@ -86,7 +88,7 @@ set -x
             })
           ];
           home-manager.sharedModules = [{
-            home.packages = with pkgs; [ mydwl mysomebar mydwl-start dwl-waybar someblocks sway-audio-idle-inhibit ];
+            home.packages = with pkgs; [ mydwl mydwl-start sway-audio-idle-inhibit ];
             programs.waybar.settings.mainBar = {
               modules-left = lib.mkForce [ ]; # "dwl/tags" ];
               modules-center = lib.mkForce [ ];
