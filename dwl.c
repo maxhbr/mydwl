@@ -2695,14 +2695,13 @@ static void
 rotatetags(const Arg *arg)
 {
 	Arg a;
-	size_t ntags = tagcount;
 	int i = arg->i;
 	int nextseltags, curseltags = selmon->tagset[selmon->seltags];
 
 	if (i > 0) // left circular shift
-		nextseltags = (curseltags << 1) | (curseltags >> (ntags - 1));
+		nextseltags = (curseltags << 1) | (curseltags >> (TAGCOUNT - 1));
 	else // right circular shift
-		nextseltags = curseltags >> 1 | (curseltags << (ntags - 1));
+		nextseltags = curseltags >> 1 | (curseltags << (TAGCOUNT - 1));
 
 	i += arg->i;
 
@@ -2713,28 +2712,18 @@ rotatetags(const Arg *arg)
 static void
 clientshift(const Arg *arg)
 {
-	Client *sel = focustop(selmon);
-
 	Arg a;
-	size_t ntags = tagcount;
 	int i = arg->i;
 	int nextseltags, curseltags = selmon->tagset[selmon->seltags];
 
 	if (i > 0) // left circular shift
-		nextseltags = (curseltags << 1) | (curseltags >> (ntags - 1));
+		nextseltags = (curseltags << 1) | (curseltags >> (TAGCOUNT - 1));
 	else // right circular shift
-		nextseltags = curseltags >> 1 | (curseltags << (ntags - 1));
+		nextseltags = curseltags >> 1 | (curseltags << (TAGCOUNT - 1));
 
 	i += arg->i;
-
 	a.i = nextseltags;
-
-	if (sel && a.i) {
-		sel->tags = a.i;
-		focusclient(focustop(selmon), 1);
-		arrange(selmon);
-	}
-	printstatus();
+  tag(&a);
 }
 
 #ifdef XWAYLAND
