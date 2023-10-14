@@ -145,6 +145,7 @@ static const char *screenlockcmd[] = { "swaylock", "-f", "-c", "000000", NULL };
 static const char *menucmd[] = { "wofi", "--show", "run", NULL };
 
 
+// use wev to get key codes
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
 	/* modifier                  key                 function        argument */
@@ -177,8 +178,10 @@ static const Key keys[] = {
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_D,          tag,            {.ui = ~0} },
 	{ MODKEY,                    XKB_KEY_comma,      focusmon,       {.i = WLR_DIRECTION_LEFT} },
 	{ MODKEY,                    XKB_KEY_period,     focusmon,       {.i = WLR_DIRECTION_RIGHT} },
-	{ MODKEY|WLR_MODIFIER_CTRL,  XKB_KEY_comma,      tagmon,         {.i = WLR_DIRECTION_LEFT} },
-	{ MODKEY|WLR_MODIFIER_CTRL,  XKB_KEY_period,     tagmon,         {.i = WLR_DIRECTION_RIGHT} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_endash,      tagmonsametags,         {.i = WLR_DIRECTION_LEFT} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_enfilledcircbullet,     tagmonsametags,         {.i = WLR_DIRECTION_RIGHT} },
+	{ MODKEY|WLR_MODIFIER_CTRL,  XKB_KEY_comma,      tagmon, {.i = WLR_DIRECTION_LEFT} },
+	{ MODKEY|WLR_MODIFIER_CTRL,  XKB_KEY_period,     tagmon, {.i = WLR_DIRECTION_RIGHT} },
 	TAGKEYS(          XKB_KEY_u, XKB_KEY_U,                          0),
 	TAGKEYS(          XKB_KEY_i, XKB_KEY_I,                          1),
 	TAGKEYS(          XKB_KEY_a, XKB_KEY_A,                          2),

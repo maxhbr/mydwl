@@ -335,6 +335,7 @@ static void spawn(const Arg *arg);
 static void startdrag(struct wl_listener *listener, void *data);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
+static void tagmonsametags(const Arg *arg);
 static void tile(Monitor *m);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
@@ -2781,6 +2782,14 @@ tagmon(const Arg *arg)
 	Client *sel = focustop(selmon);
 	if (sel)
 		setmon(sel, dirtomon(arg->i), 0);
+}
+
+void
+tagmonsametags(const Arg *arg)
+{
+	Client *sel = focustop(selmon);
+	if (sel)
+		setmon(sel, dirtomon(arg->i), sel->tags);
 }
 
 void

@@ -80,7 +80,7 @@ set -x
         (lib.mkIf cfg.enable {
           nixpkgs.overlays = [
             (_: _: {
-              inherit mydwl mysomebar mydwl-start sway-audio-idle-inhibit;
+              inherit mydwl mydwl-start sway-audio-idle-inhibit;
             })
           ];
           home-manager.sharedModules = [{
