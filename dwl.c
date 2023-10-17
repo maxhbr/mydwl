@@ -357,7 +357,6 @@ static void xytonode(double x, double y, struct wlr_surface **psurface,
 		Client **pc, LayerSurface **pl, double *nx, double *ny);
 static void zoom(const Arg *arg);
 static void rotatetags(const Arg *arg);
-static void clientshift(const Arg *arg);
 
 /* variables */
 static const char broken[] = "broken";
@@ -3159,47 +3158,27 @@ zoom(const Arg *arg)
 static void
 rotatetags(const Arg *arg)
 {
-	Arg a;
-	size_t ntags = tagcount;
+	Arg newarg;
 	int i = arg->i;
-	int nextseltags, curseltags = selmon->tagset[selmon->seltags];
+	int nextseltags = 0, curseltags = selmon->tagset[selmon->seltags];
+  bool shift = false;
 
-	if (i > 0) // left circular shift
-		nextseltags = (curseltags << 1) | (curseltags >> (ntags - 1));
-	else // right circular shift
-		nextseltags = curseltags >> 1 | (curseltags << (ntags - 1));
+  if (2 <= abs(i))
+    shift = true;
 
-	i += arg->i;
+	if (i > 0)
+		nextseltags = (curseltags << 1) | (curseltags >> (TAGCOUNT - 1));
+	else
+		nextseltags = (curseltags >> 1) | (curseltags << (TAGCOUNT - 1));
 
-	a.i = nextseltags;
-	view(&a);
-}
+	newarg.i = nextseltags;
 
-static void
-clientshift(const Arg *arg)
-{
-	Client *sel = focustop(selmon);
-
-	Arg a;
-	size_t ntags = tagcount;
-	int i = arg->i;
-	int nextseltags, curseltags = selmon->tagset[selmon->seltags];
-
-	if (i > 0) // left circular shift
-		nextseltags = (curseltags << 1) | (curseltags >> (ntags - 1));
-	else // right circular shift
-		nextseltags = curseltags >> 1 | (curseltags << (ntags - 1));
-
-	i += arg->i;
-
-	a.i = nextseltags;
-
-	if (sel && a.i) {
-		sel->tags = a.i;
-		focusclient(focustop(selmon), 1);
-		arrange(selmon);
-	}
-	printstatus();
+  if (shift) {
+    tag(&newarg);
+    return;
+  }
+  else
+    view(&newarg);
 }
 
 #ifdef XWAYLAND
