@@ -174,8 +174,6 @@ static const Key keys[] = {
 	{ MODKEY,                    XKB_KEY_f,          setlayout,      {.v = &monocleLayout} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_F,          togglefullscreen, {0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_space,      setlayout,      {0} },
-	{ MODKEY,                    XKB_KEY_d,          view,           {.ui = ~0} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_D,          tag,            {.ui = ~0} },
 	{ MODKEY,                    XKB_KEY_comma,      focusmon,       {.i = WLR_DIRECTION_LEFT} },
 	{ MODKEY,                    XKB_KEY_period,     focusmon,       {.i = WLR_DIRECTION_RIGHT} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_endash,      tagmonsametags,         {.i = WLR_DIRECTION_LEFT} },
@@ -191,6 +189,8 @@ static const Key keys[] = {
 	TAGKEYS(          XKB_KEY_n, XKB_KEY_N,                          6),
 	TAGKEYS(          XKB_KEY_r, XKB_KEY_R,                          7),
 	TAGKEYS(          XKB_KEY_t, XKB_KEY_T,                          8),
+	{ MODKEY,                    XKB_KEY_d,          view,           {.ui = ~0} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_D,          tag,            {.ui = ~0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Q,          quit,           {0} },
 
 	/* Ctrl-Alt-Backspace and Ctrl-Alt-Fx used to be handled by X server */
