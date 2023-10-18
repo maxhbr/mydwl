@@ -16,6 +16,7 @@ static const unsigned int gappov           = 10; /* vert outer gap between windo
 static const float bordercolor[]           = COLOR(0xe0cbc722);
 static const float focuscolor[]            = COLOR(0xee9a00ff);
 static const float floatcolor[]            = COLOR(0xff000033);
+static const float urgentcolor[]           = COLOR(0xff0000ff);
 /* To conform the xdg-protocol, set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.1, 0.1, 0.1, 1.0};
 static const float unfocussedalpha         = 0.75;
@@ -33,6 +34,9 @@ static const char *const autostart[] = {
 /* tagging - tagcount must be no greater than 31 */
 #define TAGCOUNT (9)
 static const int tagcount = TAGCOUNT;
+
+/* logging */
+static int log_level = WLR_ERROR;
 
 /* use lswt to identify names */
 static const Rule rules[] = {
@@ -162,8 +166,10 @@ static const Key keys[] = {
 	{ MODKEY,                    XKB_KEY_k,          focusstack,     {.i = -1} },
     { MODKEY,                    XKB_KEY_Left,      	 rotatetags,     {.i = -1} },
     { MODKEY,                    XKB_KEY_Right,      	 rotatetags,     {.i =  1} },
-    { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Left,      	 clientshift,    {.i = -1} },
-    { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Right,      	 clientshift,    {.i =  1} },
+    /* { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Left,      	 clientshift,    {.i = -1} },
+    { ODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Right,      	 clientshift,    {.i =  1} }, */
+    { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Left,           rotatetags,     {.i = -2} },
+    { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Right,          rotatetags,     {.i =  2} },
 	{ MODKEY,                    XKB_KEY_h,          setmfact,       {.f = -0.05} },
 	{ MODKEY,                    XKB_KEY_l,          setmfact,       {.f = +0.05} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_H,          incnmaster,     {.i = +1} },
