@@ -13,9 +13,9 @@ static const unsigned int gappih           = 10; /* horiz inner gap between wind
 static const unsigned int gappiv           = 10; /* vert inner gap between windows */
 static const unsigned int gappoh           = 10; /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov           = 10; /* vert outer gap between windows and screen edge */
-static const float bordercolor[]           = COLOR(0xe0cbc722);
+static const float bordercolor[]           = COLOR(0xe0cbc7ff);
 static const float focuscolor[]            = COLOR(0xee9a00ff);
-static const float floatcolor[]            = COLOR(0xff000033);
+static const float floatcolor[]            = COLOR(0xCC8899ff);
 static const float urgentcolor[]           = COLOR(0xff0000ff);
 /* To conform the xdg-protocol, set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.1, 0.1, 0.1, 1.0};

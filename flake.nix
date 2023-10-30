@@ -20,7 +20,6 @@
           version = "git";
           src = ./.;
           enableXWayland = true;
-          # conf = ./myconfig.h;
       }));
       mydwl = self.packages.x86_64-linux.dwl.override { conf = ./myconfig.h; };
       mysomebar =  (pkgs.somebar.overrideAttrs (prev: {
