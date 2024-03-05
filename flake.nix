@@ -82,11 +82,11 @@ set -x
               inherit mydwl mydwl-start sway-audio-idle-inhibit;
             })
           ];
-          home-manager.sharedModules = [{
+          home-manager.sharedModules = [({config, ...}: {
             home.packages = with pkgs; [ mydwl mydwl-start sway-audio-idle-inhibit ];
             programs.waybar.settings.mainBar = {
-              modules-left = lib.mkForce [ ]; # "dwl/tags" ];
-              modules-center = lib.mkForce [ ];
+              # modules-left = lib.mkForce [ ]; # "dwl/tags" ];
+              # modules-center = lib.mkForce [ ];
               "dwl/tags" = {
                 num-tags = 9;
                 tag-labels = [ "U" "I" "A" "E" "O" "S" "N" "R" "T" ];
@@ -103,7 +103,7 @@ set -x
                 };
               };
             };
-          }];
+          })];
         });
     };
   };
