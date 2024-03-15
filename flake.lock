@@ -2,11 +2,11 @@
   "nodes": {
     "nixpkgs": {
       "locked": {
-        "lastModified": 1695830400,
-        "narHash": "sha256-gToZXQVr0G/1WriO83olnqrLSHF2Jb8BPcmCt497ro0=",
+        "lastModified": 1710451336,
+        "narHash": "sha256-pP86Pcfu3BrAvRO7R64x7hs+GaQrjFes+mEPowCfkxY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "8a86b98f0ba1c405358f1b71ff8b5e1d317f5db2",
+        "rev": "d691274a972b3165335d261cc4671335f5c67de9",
         "type": "github"
       },
       "original": {
@@ -26,11 +26,11 @@
     "somebar": {
       "flake": false,
       "locked": {
-        "lastModified": 1691000288,
-        "narHash": "sha256-9KYuX2bwRKiHiRHsFthdZ+TVkJE8Cjm+f78f9qhbB90=",
+        "lastModified": 1708085853,
+        "narHash": "sha256-4s9tj5+lOkYjF5cuFRrR1R1S5nzqvZFq9SUAFuA8QXc=",
         "owner": "~raphi",
         "repo": "somebar",
-        "rev": "8c52d4704c0ac52c946e41a1a68c8292eb83d0d2",
+        "rev": "6572b98d697fef50473366bf4b598e66c0be3e54",
         "type": "sourcehut"
       },
       "original": {
@@ -42,11 +42,11 @@
     "sway-audio-idle-inhibit": {
       "flake": false,
       "locked": {
-        "lastModified": 1691602798,
-        "narHash": "sha256-MKzyF5xY0uJ/UWewr8VFrK0y7ekvcWpMv/u9CHG14gs=",
+        "lastModified": 1707589229,
+        "narHash": "sha256-Y5eOyxB63YgMoIQSic4zGLVuXVErAnjajRdboNBmKyQ=",
         "owner": "ErikReider",
         "repo": "SwayAudioIdleInhibit",
-        "rev": "c850bc4812216d03e05083c69aa05326a7fab9c7",
+        "rev": "8ac8608d31e18e5a064002c2a1ef73a683ea9537",
         "type": "github"
       },
       "original": {

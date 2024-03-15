@@ -32,6 +32,7 @@ makeWrapper $out/bin/somebar $out/bin/mysomebar \
         '';
       }));
       sway-audio-idle-inhibit = pkgs.callPackage ./SwayAudioIdleInhibit { src = inputs.sway-audio-idle-inhibit; };
+      default = self.packages.x86_64-linux.mydwl;
     };
     nixosModules.mydwl = {config, pkgs, lib, ...}: with self.packages.x86_64-linux; let
       cfg = config.mydwl;
