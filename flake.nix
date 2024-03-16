@@ -16,12 +16,8 @@
     sway-audio-idle-inhibit.flake = false;
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
-  let
-    pkgs = import nixpkgs { system = "x86_64-linux"; };
-
-  in {
-    packages.x86_64-linux = import ./packages.flake.nix pkgs inputs;
-    nixosModules = import ./nixosModules.flake.nix pkgs inputs;
+  outputs = inputs: {
+    packages = import ./packages.flake.nix inputs;
+    nixosModules = import ./nixosModules.flake.nix inputs;
   };
 }

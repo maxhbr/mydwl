@@ -1,4 +1,3 @@
-pkgs:
 { self, nixpkgs, ... }@inputs:
 {
   mydwl = {config, pkgs, lib, ...}: with self.packages.x86_64-linux; let
