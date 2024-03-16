@@ -24,7 +24,14 @@ let pkgs = nixpkgsFor."${system}"; in {
       src = inputs.dwl;
       enableXWayland = true;
   }));
-  mydwl-git = self.packages.x86_64-linux.dwl-git.override { conf = ./myconfig.h; };
+  dwl-patched-git = self.packages.x86_64-linux.dwl-git.overrideAttrs (oldAttrs: rec {
+    patches = [
+      # "${inputs.dwl-patches}/vanitygaps/vanitygaps.patch"
+      "${inputs.dwl-patches}/centeredmaster/centeredmaster.patch"
+      "${inputs.dwl-patches}/rotatetags/rotatetags.patch"
+    ];
+  });
+  mydwl-git = self.packages.x86_64-linux.dwl-patched-git.override { conf = ./myconfig.h; };
 
   mysomebar =  (pkgs.somebar.overrideAttrs (prev: {
     version = "git";

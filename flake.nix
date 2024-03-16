@@ -4,9 +4,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    dwl.url = "https://codeberg.org/dwl/dwl";
+    dwl.url = "git+https://codeberg.org/dwl/dwl";
     dwl.flake = false;
-    dwl-patches.url = "https://codeberg.org/dwl/dwl-patches";
+    dwl-patches.url = "git+https://codeberg.org/dwl/dwl-patches";
     dwl-patches.flake = false;
 
     somebar.url = "sourcehut:~raphi/somebar";

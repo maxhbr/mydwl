@@ -3,24 +3,32 @@
     "dwl": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-H2QiKhihYRQ49tPeUXe/MJv3RjBkObNU6SCroKxqdRI=",
-        "type": "file",
+        "lastModified": 1710180073,
+        "narHash": "sha256-Dd2466wNfR/foZsBh8r0l/Q+lbr7zIFFumnQr2IVKb0=",
+        "ref": "refs/heads/main",
+        "rev": "2b171fd5010379a8674afa012245fea5a590e472",
+        "revCount": 1155,
+        "type": "git",
         "url": "https://codeberg.org/dwl/dwl"
       },
       "original": {
-        "type": "file",
+        "type": "git",
         "url": "https://codeberg.org/dwl/dwl"
       }
     },
     "dwl-patches": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-eU8K7jUAKmuJ1qat+WmhfhKB9IVOt8aFLLuU6riwycQ=",
-        "type": "file",
+        "lastModified": 1710591104,
+        "narHash": "sha256-4iUmiahs0ze+fKgA6fwq7GAKqB685arkjAJEBBd8yvo=",
+        "ref": "refs/heads/main",
+        "rev": "b6031b0c38478714a7f4ade1f449899f6bf92bb1",
+        "revCount": 140,
+        "type": "git",
         "url": "https://codeberg.org/dwl/dwl-patches"
       },
       "original": {
-        "type": "file",
+        "type": "git",
         "url": "https://codeberg.org/dwl/dwl-patches"
       }
     },

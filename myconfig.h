@@ -32,6 +32,13 @@ static const char *const autostart[] = {
 	NULL
 };
 
+enum {
+    VIEW_L = -1,
+    VIEW_R = 1,
+    SHIFT_L = -2,
+    SHIFT_R = 2,
+} RotateTags;
+
 /* tagging - tagcount must be no greater than 31 */
 #define TAGCOUNT (9)
 static const int tagcount = TAGCOUNT;
@@ -55,7 +62,7 @@ static const Rule rules[] = {
 
 static const Layout tileLayout =  { "[]=", tile };
 static const Layout monocleLayout =  { "[M]", monocle };
-/* static const Layout centeredmasterLayout =  { "|M|", centeredmaster }; */
+static const Layout centeredmasterLayout =  { "|M|", centeredmaster };
 static const Layout floatingLayout =  { "><>", NULL };
 
 /* layout(s) */
@@ -71,7 +78,7 @@ static const Layout layouts[] = {
 static const MonitorRule monrules[] = {
 	/* name       mfact nmaster scale layout       rotate/reflect                x    y */
 	{ "eDP-1",    0.5,  1,      1,    &tileLayout, WL_OUTPUT_TRANSFORM_NORMAL,   0,  0 },
-	/* { "DP-6",    0.5,  1,      1,    &centeredmasterLayout, WL_OUTPUT_TRANSFORM_NORMAL,   1,  0 }, */
+	{ "DP-6",    0.5,  1,      1,    &centeredmasterLayout, WL_OUTPUT_TRANSFORM_NORMAL,   1,  0 },
 	{ "DP-1",    0.5,  1,      1,    &tileLayout, WL_OUTPUT_TRANSFORM_NORMAL,   1,  -1 },
 	/* defaults */
 	{ NULL,       0.55, 1,      1,    &tileLayout, WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 },
@@ -164,12 +171,12 @@ static const Key keys[] = {
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Y,     spawn,          {.v = screenlockcmd} },
 	{ MODKEY,                    XKB_KEY_j,          focusstack,     {.i = +1} },
 	{ MODKEY,                    XKB_KEY_m,          focusstack,     {.i = -1} },
-    /* { MODKEY,                    XKB_KEY_Left,      	 rotatetags,     {.i = -1} }, */
-    /* { MODKEY,                    XKB_KEY_Right,      	 rotatetags,     {.i =  1} }, */
+    { MODKEY,                    XKB_KEY_Left,      	 rotatetags,     {.i = -1} },
+    { MODKEY,                    XKB_KEY_Right,      	 rotatetags,     {.i =  1} },
     /* { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Left,      	 clientshift,    {.i = -1} },
     { ODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Right,      	 clientshift,    {.i =  1} }, */
-    /* { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Left,           rotatetags,     {.i = -2} }, */
-    /* { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Right,          rotatetags,     {.i =  2} }, */
+    { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Left,           rotatetags,     {.i = -2} },
+    { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Right,          rotatetags,     {.i =  2} },
 	{ MODKEY,                    XKB_KEY_h,          setmfact,       {.f = -0.05} },
 	{ MODKEY,                    XKB_KEY_l,          setmfact,       {.f = +0.05} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_H,          incnmaster,     {.i = +1} },
@@ -181,6 +188,7 @@ static const Key keys[] = {
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_C,          killclient,     {0} },
 	/* { MODKEY,                    XKB_KEY_space,      cyclelayout,    {.i = +1 } }, */
 	{ MODKEY,                    XKB_KEY_f,          setlayout,      {.v = &monocleLayout} },
+	{ MODKEY|WLR_MODIFIER_CTRL,  XKB_KEY_space,      togglefloating, {0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_F,          togglefullscreen, {0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_space,      setlayout,      {0} },
 	{ MODKEY,                    XKB_KEY_comma,      focusmon,       {.i = WLR_DIRECTION_LEFT} },
