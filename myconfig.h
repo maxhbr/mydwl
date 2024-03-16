@@ -173,8 +173,8 @@ static const Key keys[] = {
 	{ MODKEY,                    XKB_KEY_m,          focusstack,     {.i = -1} },
     { MODKEY,                    XKB_KEY_Left,      	 rotatetags,     {.i = -1} },
     { MODKEY,                    XKB_KEY_Right,      	 rotatetags,     {.i =  1} },
-    /* { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Left,      	 clientshift,    {.i = -1} },
-    { ODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Right,      	 clientshift,    {.i =  1} }, */
+    /* { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Left,      	 clientshift,    {.i = -1} }, // TODO
+    { ODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Right,      	 clientshift,    {.i =  1} }, */ // TODO
     { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Left,           rotatetags,     {.i = -2} },
     { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Right,          rotatetags,     {.i =  2} },
 	{ MODKEY,                    XKB_KEY_h,          setmfact,       {.f = -0.05} },
@@ -186,15 +186,15 @@ static const Key keys[] = {
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Tab,        zoom,           {0} },
 	{ MODKEY,                    XKB_KEY_y,          view,           {0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_C,          killclient,     {0} },
-	/* { MODKEY,                    XKB_KEY_space,      cyclelayout,    {.i = +1 } }, */
+	/* { MODKEY,                    XKB_KEY_space,      cyclelayout,    {.i = +1 } }, */ // TODO
 	{ MODKEY,                    XKB_KEY_f,          setlayout,      {.v = &monocleLayout} },
 	{ MODKEY|WLR_MODIFIER_CTRL,  XKB_KEY_space,      togglefloating, {0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_F,          togglefullscreen, {0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_space,      setlayout,      {0} },
 	{ MODKEY,                    XKB_KEY_comma,      focusmon,       {.i = WLR_DIRECTION_LEFT} },
 	{ MODKEY,                    XKB_KEY_period,     focusmon,       {.i = WLR_DIRECTION_RIGHT} },
-	/* { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_endash,      tagmonsametags,         {.i = WLR_DIRECTION_LEFT} }, */
-	/* { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_enfilledcircbullet,     tagmonsametags,         {.i = WLR_DIRECTION_RIGHT} }, */
+	/* { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_endash,      tagmonsametags,         {.i = WLR_DIRECTION_LEFT} }, */ // TODO
+	/* { MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_enfilledcircbullet,     tagmonsametags,         {.i = WLR_DIRECTION_RIGHT} }, */ // TODO
 	{ MODKEY|WLR_MODIFIER_CTRL,  XKB_KEY_comma,      tagmon, {.i = WLR_DIRECTION_LEFT} },
 	{ MODKEY|WLR_MODIFIER_CTRL,  XKB_KEY_period,     tagmon, {.i = WLR_DIRECTION_RIGHT} },
 	TAGKEYS(          XKB_KEY_u, XKB_KEY_U,                          0),
@@ -219,6 +219,6 @@ static const Key keys[] = {
 
 static const Button buttons[] = {
 	{ MODKEY, BTN_LEFT,   moveresize,     {.ui = CurMove} },
-	/* { MODKEY, BTN_MIDDLE, setnofloating,   {0} }, */
+	/* { MODKEY, BTN_MIDDLE, setnofloating,   {0} }, */ // TODO
 	{ MODKEY, BTN_RIGHT,  moveresize,     {.ui = CurResize} },
 };

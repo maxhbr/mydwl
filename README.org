@@ -1,4 +1,7 @@
 * my dwl configuration
+
+
+** old Readme content:
 The repo is a fork of https://github.com/djpohly/dwl with
 - a bunch of patches applied (see [[./myscripts/apply-patches.sh]]),
 - my custom part of the config in [[./myconfig.c]] and
