@@ -56,7 +56,9 @@ applyPatches() {
     ./dwl-patches/vanitygaps/vanitygaps.patch
     # "sevz17:vanitygaps"
   # #   "sevz17:autostart"
+    ./dwl-patches/centeredmaster/centeredmaster.patch
     # "NikitaIvanovV:centeredmaster"
+    ./dwl-patches/rotatetags/rotatetags.patch
     # "korei999:rotatetags"
     # "dm1tz:04-cyclelayouts"
   # #   "wochap:regexrules"
