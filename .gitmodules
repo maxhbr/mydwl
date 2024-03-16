@@ -1,3 +1,6 @@
 [submodule "dwl-patches"]
 	path = dwl-patches
 	url = https://codeberg.org/dwl/dwl-patches
+[submodule "dwl"]
+	path = dwl
+	url = https://codeberg.org/dwl/dwl

@@ -1,0 +1,10 @@
+dwl
+*.o
+*-protocol.c
+*-protocol.h
+.ccls-cache
+config.h
+
+result
+result-*
+*.orig
